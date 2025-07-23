@@ -1,13 +1,13 @@
 CC=gcc
+EXECNAME=bfi.out
 
 build:
-	$(CC) -o bfi bfi.c
+	$(CC) -o $(EXECNAME) bfi.c
 
 clean:
-	rm bfi
+	rm $(EXECNAME)
 
 run:
-	$(CC) -o bfi bfi.c
-	./bfi $(FILE)
-	rm bfi
-
+	$(CC) -o $(EXECNAME) bfi.c
+	./$(EXECNAME) $(FILE)
+	rm $(EXECNAME)
