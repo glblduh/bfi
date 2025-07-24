@@ -101,11 +101,15 @@ void interpret() {
 				break;
 			case '+':
 				tape[pointerIndex] += commandListRepetition[i];
-				if (tape[pointerIndex] > MAX_CELL_VALUE) tape[pointerIndex] -= MAX_CELL_VALUE;
+				if (tape[pointerIndex] > MAX_CELL_VALUE) {
+					tape[pointerIndex] -= MAX_CELL_VALUE;
+				}
 				break;
 			case '-':
 				tape[pointerIndex] -= commandListRepetition[i];
-				if (tape[pointerIndex] < 0) tape[pointerIndex] += MAX_CELL_VALUE;
+				if (tape[pointerIndex] < 0) {
+					tape[pointerIndex] += MAX_CELL_VALUE;
+				}
 				break;
 			case ',':
 				for (int j=0;j<commandListRepetition[i];j++) {
