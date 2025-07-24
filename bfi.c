@@ -59,14 +59,14 @@ int main(int argc, char* argv[]) {
 			unpairedLoopCount++;
 		}
 
-		if (currentCommand == ']') {
-			commandListRepetition[unpairedLoopIndex[unpairedLoopCount-1]] = i;
-			commandListRepetition[i] = unpairedLoopIndex[unpairedLoopCount-1]-1;
-			unpairedLoopCount--;
-		}
-
 		commandList[i] = currentCommand;
 		commandListRepetition[i]++;
+
+		if (currentCommand == ']') {
+			commandListRepetition[unpairedLoopIndex[unpairedLoopCount-1]] = i;
+			commandListRepetition[i] = unpairedLoopIndex[unpairedLoopCount-1];
+			unpairedLoopCount--;
+		}
 	}
 
 	fclose(srcf);
