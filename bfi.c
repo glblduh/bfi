@@ -89,9 +89,15 @@ void interpret() {
 		switch (commandList[i]) {
 			case '>':
 				pointerIndex += commandListRepetition[i];
+				if (pointerIndex > TAPE_SIZE) {
+					pointerIndex -= TAPE_SIZE;
+				}
 				break;
 			case '<':
 				pointerIndex -= commandListRepetition[i];
+				if (pointerIndex < 0) {
+					pointerIndex += TAPE_SIZE;
+				}
 				break;
 			case '+':
 				tape[pointerIndex] += commandListRepetition[i];
@@ -121,13 +127,6 @@ void interpret() {
 					i = commandListRepetition[i];
 				}
 				break;
-		}
-
-		if (pointerIndex > TAPE_SIZE) {
-			pointerIndex -= TAPE_SIZE;
-		}
-		if (pointerIndex < 0) {
-			pointerIndex += TAPE_SIZE;
 		}
 	}
 	return;
