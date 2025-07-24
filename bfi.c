@@ -54,13 +54,13 @@ int main(int argc, char* argv[]) {
 			continue;
 		}
 
+		commandList[i] = currentCommand;
+		commandListRepetition[i]++;
+
 		if (currentCommand == '[') {
 			unpairedLoopIndex[unpairedLoopCount] = i;
 			unpairedLoopCount++;
 		}
-
-		commandList[i] = currentCommand;
-		commandListRepetition[i]++;
 
 		if (currentCommand == ']') {
 			commandListRepetition[unpairedLoopIndex[unpairedLoopCount-1]] = i;
