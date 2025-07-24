@@ -9,11 +9,6 @@ int pointerIndex = 0;
 char commandList[50000] = {0};
 int commandListRepetition[sizeof(commandList)/sizeof(char)] = {0};
 
-int unpairedLoopIndex[1000] = {0};
-int pairedStartLoopIndex[1000] = {0};
-int pairedEndLoopIndex[sizeof(pairedStartLoopIndex)/sizeof(int)] = {0};
-int pairedLoopCount = 0;
-
 void interpret();
 
 int main(int argc, char* argv[]) {
@@ -31,6 +26,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	char currentCommand;
+	int unpairedLoopIndex[1000] = {0};
 	int unpairedLoopCount = 0;
 	for (int i=0;i<(sizeof(commandList)/sizeof(char));i++) {
 		currentCommand = fgetc(srcf);
@@ -64,10 +60,9 @@ int main(int argc, char* argv[]) {
 		}
 
 		if (currentCommand == ']') {
-			pairedStartLoopIndex[pairedLoopCount] = unpairedLoopIndex[unpairedLoopCount-1];
-			pairedEndLoopIndex[pairedLoopCount] = i;
+			commandListRepetition[unpairedLoopIndex[unpairedLoopCount-1]] = i;
+			commandListRepetition[i] = unpairedLoopIndex[unpairedLoopCount-1]-1;
 			unpairedLoopCount--;
-			pairedLoopCount++;
 		}
 
 		commandList[i] = currentCommand;
@@ -118,20 +113,12 @@ void interpret() {
 				break;
 			case '[':
 				if (tape[pointerIndex] == 0) {
-					for (int j=0;j<pairedLoopCount;j++) {
-						if (i != pairedStartLoopIndex[j]) continue;
-						i = pairedEndLoopIndex[j];
-						break;
-					}
+					i = commandListRepetition[i];
 				}
 				break;
 			case ']':
 				if (tape[pointerIndex] != 0) {
-					for (int j=0;j<pairedLoopCount;j++) {
-						if (i != pairedEndLoopIndex[j]) continue;
-						i = pairedStartLoopIndex[j];
-						break;
-					}
+					i = commandListRepetition[i];
 				}
 				break;
 		}
