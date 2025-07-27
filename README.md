@@ -1,2 +1,2 @@
 # BFI
-*A simple BrainF\*\*\* interpreter written in C*
+*A simple BrainF\*\*\* interpreter and JIT compiler written in C*
