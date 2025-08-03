@@ -125,52 +125,97 @@ int interpret() {
 		case ',':
 			break;
 		case '.':
-			for (int j=0;j<commandListRepetition[i];j++) {
-				code[codeCount] = 0x48;
-				codeCount++;
-				code[codeCount] = 0x89;
-				codeCount++;
-				code[codeCount] = 0xfe;
-				codeCount++;
-				code[codeCount] = 0x57;
-				codeCount++;
-				code[codeCount] = 0xb8;
-				codeCount++;
-				code[codeCount] = 0x01;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0xbf;
-				codeCount++;
-				code[codeCount] = 0x01;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0xba;
-				codeCount++;
-				code[codeCount] = 0x01;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0x00;
-				codeCount++;
-				code[codeCount] = 0x0f;
-				codeCount++;
-				code[codeCount] = 0x05;
-				codeCount++;
-				code[codeCount] = 0x5f;
-				codeCount++;
-			}
+			code[codeCount] = 0x41;
+			codeCount++;
+			code[codeCount] = 0xba;
+			codeCount++;
+			code[codeCount] = commandListRepetition[i] & 0xFF;
+			codeCount++;
+			code[codeCount] = (commandListRepetition[i] >> 8) & 0xFF;
+			codeCount++;
+			code[codeCount] = (commandListRepetition[i] >> 16) & 0xFF;
+			codeCount++;
+			code[codeCount] = (commandListRepetition[i] >> 24) & 0xFF;
+			codeCount++;
+
+			int startLoopCount = codeCount;
+
+			code[codeCount] = 0x48;
+			codeCount++;
+			code[codeCount] = 0x89;
+			codeCount++;
+			code[codeCount] = 0xfe;
+			codeCount++;
+
+			code[codeCount] = 0x57;
+			codeCount++;
+
+			code[codeCount] = 0xb8;
+			codeCount++;
+			code[codeCount] = 0x01;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+
+			code[codeCount] = 0xbf;
+			codeCount++;
+			code[codeCount] = 0x01;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+
+			code[codeCount] = 0xba;
+			codeCount++;
+			code[codeCount] = 0x01;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+			code[codeCount] = 0x00;
+			codeCount++;
+
+			code[codeCount] = 0x0f;
+			codeCount++;
+			code[codeCount] = 0x05;
+			codeCount++;
+
+			code[codeCount] = 0x5f;
+			codeCount++;
+
+			code[codeCount] = 0x49;
+			codeCount++;
+			code[codeCount] = 0xff;
+			codeCount++;
+			code[codeCount] = 0xca;
+			codeCount++;
+
+			code[codeCount] = 0x0f;
+			codeCount++;
+			code[codeCount] = 0x85;
+			codeCount++;
+			code[codeCount] = 0xfa;
+			codeCount++;
+			code[codeCount] = 0xff;
+			codeCount++;
+			code[codeCount] = 0xff;
+			codeCount++;
+			code[codeCount] = 0xff;
+			codeCount++;
+
+			int endLoopOffset = (codeCount - startLoopCount) * -1;
+			code[codeCount-4] = endLoopOffset & 0xFF;
+			code[codeCount-3] = (endLoopOffset >> 8) & 0xFF;
+			code[codeCount-2] = (endLoopOffset >> 16) & 0xFF;
+			code[codeCount-1] = (endLoopOffset >> 24) & 0xFF;
 			break;
 		case '[':
 			code[codeCount] = 0x80;
